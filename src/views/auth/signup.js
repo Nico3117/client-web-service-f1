@@ -1,34 +1,41 @@
 import React from 'react'
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Signup() {
 
   const [email, setEmail] = React.useState(null)
   const [password, setPassword] = React.useState(null)
   const [name, setName] = React.useState(null)
-  const [error, setError] = React.useState(null)
+
+  const navigate = useNavigate();
   
-  const handleLogin = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
 
-    const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ 
-        email: email,
-        password: password,
-        name: name
-     })
-    };
+      const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          email: email,
+          password: password,
+          name: name
+       })
+      };
 
-    fetch('http://localhost:3000/api/auth/signup', requestOptions)
-      .then((response) => response.json())
-      .then((data) => console.log(data))
+      try {
+        const response = await fetch('http://localhost:3000/api/auth/signup', requestOptions);
+        const data = await response.json();
+        console.log(data)
+        localStorage.setItem('token', data.token);
+        navigate('/')
+      } catch (error) {
+        console.error(error);
+      }
   }
 
   return (
     <div className="container">
-      <form className="w-full max-w-2xl mx-auto" onSubmit={handleLogin}>
+      <form className="w-full max-w-2xl mx-auto" onSubmit={handleSubmit}>
         <h1 className="text-gray-600 my-8 text-center text-xl font-bold">Inscrivez-vous</h1>
         <div className="flex items-center border-2 mb-8 py-2 px-3 rounded-2xl ">
             <input className="pl-2 w-full outline-none border-none" name="name" id="name" placeholder="Pseudo" onChange={e=>setName(e.target.value)}/>
@@ -43,7 +50,6 @@ function Signup() {
         <div className="flex justify-between items-center mt-4">
           <Link to="/connexion">Déjà un compte ?</Link>
         </div>
-        {error && <span className='text-red-700'>{error}</span>}
       </form> 
     </div>
   )
