@@ -1,10 +1,12 @@
 import React from 'react';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineHome, AiOutlineUser, AiOutlineMenu, AiOutlineClose, AiOutlineLogout } from 'react-icons/ai';
 
 function Sidebar() {
 
     const [Open, setOpen] = React.useState(true);
+
+    const navigate = useNavigate();
 
     const OpenSidebar = () => {
         if (Open === true) {
@@ -16,6 +18,7 @@ function Sidebar() {
 
     const LogOut = () => {
         localStorage.removeItem('token');
+        navigate('/')
         OpenSidebar()
     }
 
@@ -27,7 +30,7 @@ function Sidebar() {
             <AiOutlineMenu onClick={OpenSidebar} className="text-white" size={30}/>
         </div>
         <div className={"flex flex-col text-gray-800 " + ( Open ? "hidden" : "")}>
-            <div className="fixed flex flex-col top-0 left-0 w-64 bg-dark h-full shadow-lg">
+            <div className="fixed flex flex-col top-0 left-0 w-64 bg-dark h-full shadow-lg z-10">
                 <div className="h-20 flex items-center pl-6">
                     <AiOutlineClose  onClick={OpenSidebar} className="text-white" size={30}/>
                 </div>

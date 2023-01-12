@@ -19,7 +19,7 @@ function MapGoogle() {
     height: '800px'
   };
   
-  const center = {
+  const france = {
     lat: 46.63728,
     lng: 2.3382623
   };
@@ -32,13 +32,17 @@ function MapGoogle() {
   })
 
   return isLoaded ? (
-    <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={4}>
+    <GoogleMap mapContainerStyle={containerStyle} center={france} zoom={4}>
       {
-        Circuit.map(circuit => {     
-          <Marker key={circuit.circuitId} position={{
-            lat: parseFloat(circuit.Location.lat), 
-            lng: parseFloat(circuit.Location.long)
-          }} />
+        Circuit.map(circuit => {
+            return (
+              <div key={circuit.circuitId}>
+                <Marker position={{
+                  lat: parseFloat(circuit.Location.lat), 
+                  lng: parseFloat(circuit.Location.long)
+                }}/>
+              </div>
+            )
         })
       }
     </GoogleMap>
