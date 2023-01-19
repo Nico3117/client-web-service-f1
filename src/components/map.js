@@ -8,7 +8,10 @@ function MapGoogle(props) {
 
   const [OwnCircuit, setOwnCircuit] = React.useState([])
   const [position, setPosition] = React.useState({
- 
+    lat: 46.227638,
+    lng: 2.213749
+  })
+
   const [selectedCenter, setSelectedCenter] = useState(null);
 
   const [zoom, setZoom] = React.useState(4)
@@ -73,29 +76,28 @@ function MapGoogle(props) {
               <Marker position={{
                 lat: parseFloat(circuit.Location.lat),
                 lng: parseFloat(circuit.Location.long)
-              }} onClick={
-                  () => {
-                    setSelectedCenter(circuit);
-                }}/>
-                {selectedCenter && (
-                  <InfoWindow
-                      onCloseClick={() => {
-                        setSelectedCenter(null);
-                      }}      
-                      position={{
-                        lat: parseFloat(selectedCenter.Location.lat),
-                        lng: parseFloat(selectedCenter.Location.long)
-                      }}
-                  >
-                    <div className="markerInfo">
-                      <h1>{selectedCenter.circuitName}</h1>
-                      <p>Latitude : {selectedCenter.Location.lat}</p>
-                      <p>Longitude : {selectedCenter.Location.long}</p>
-                      <a href={selectedCenter.url} target="_blank"><span>Info</span></a>
+              }} 
+              onClick={() => {setSelectedCenter(circuit)}} 
+              />
+              {selectedCenter && (
+                <InfoWindow
+                  onCloseClick={() => {
+                    setSelectedCenter(null);
+                  }}
+                  position={{
+                    lat: parseFloat(selectedCenter.Location.lat),
+                    lng: parseFloat(selectedCenter.Location.long)
+                  }}
+                >
+                  <div className="markerInfo">
+                    <h1>{selectedCenter.circuitName}</h1>
+                    <p>Latitude : {selectedCenter.Location.lat}</p>
+                    <p>Longitude : {selectedCenter.Location.long}</p>
+                    <a href={selectedCenter.url} target="_blank"><span>Info</span></a>
 
-                    </div>
-                  </InfoWindow>
-                )}
+                  </div>
+                </InfoWindow>
+              )}
             </div>
           )
         })
