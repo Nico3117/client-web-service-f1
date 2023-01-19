@@ -8,6 +8,9 @@ module.exports = {
       colors: {
         'dark': '#1a1b1e',
       },
+      spacing: {
+        '40': '40vw',
+      }
     },
   },
   plugins: [],
