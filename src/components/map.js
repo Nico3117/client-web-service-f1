@@ -1,5 +1,6 @@
 import React from 'react'
-import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api';
+import { useState } from 'react';
+import { GoogleMap, useJsApiLoader, Marker, InfoWindow } from '@react-google-maps/api';
 
 function MapGoogle() {
 
@@ -13,6 +14,8 @@ function MapGoogle() {
     })
     .catch((error) => { return console.log('error', error) });
   }, [])
+
+  const [selectedCenter, setSelectedCenter] = useState(null);
 
   const containerStyle = {
     width: '800px',
@@ -37,10 +40,36 @@ function MapGoogle() {
         Circuit.map(circuit => {
             return (
               <div key={circuit.circuitId}>
-                <Marker position={{
+                <Marker 
+                position={{
                   lat: parseFloat(circuit.Location.lat), 
                   lng: parseFloat(circuit.Location.long)
-                }}/>
+                }}
+                onClick={
+                  () => {
+                    setSelectedCenter(circuit);
+                }}
+                />
+
+                {selectedCenter && (
+                  <InfoWindow
+                      onCloseClick={() => {
+                        setSelectedCenter(null);
+                      }}      
+                      position={{
+                        lat: parseFloat(selectedCenter.Location.lat),
+                        lng: parseFloat(selectedCenter.Location.long)
+                      }}
+                  >
+                    <div className="markerInfo">
+                      <h1>{selectedCenter.circuitName}</h1>
+                      <p>Latitude : {selectedCenter.Location.lat}</p>
+                      <p>Longitude : {selectedCenter.Location.long}</p>
+                      <a href={selectedCenter.url} target="_blank"><span>Info</span></a>
+
+                    </div>
+                  </InfoWindow>
+                )}
               </div>
             )
         })
