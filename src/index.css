@@ -1,8 +1,33 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 .container {
     margin-left: auto;
     margin-right: auto;
+}
+
+.markerInfo h1 {
+    font-size: 15px;
+    font-weight: 600;
+    padding: 0.2rem;
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+
+.markerInfo p {
+    margin-bottom: 0.2rem;
+}
+
+.markerInfo a {
+    margin: 0.7rem auto 0.1rem auto;
+    display: flex;
+    background-color: black;
+    color: white;
+    width: 50%;
+}
+
+.markerInfo a span {
+    margin: auto;
+    display: flex;
+    padding: 0.3rem 0;
 }
