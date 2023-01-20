@@ -31,7 +31,7 @@ function Home() {
 
         try {
             const response = await fetch('http://localhost:3000/api/circuit', requestOptions);
-            if (response.status == 200) {
+            if (response.status === 200) {
                 window.location.reload();
             }
         } catch (error) {

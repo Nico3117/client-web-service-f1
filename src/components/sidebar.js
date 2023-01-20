@@ -20,6 +20,7 @@ function Sidebar() {
         localStorage.removeItem('token');
         navigate('/')
         OpenSidebar()
+        window.location.reload();
     }
 
     const token = localStorage.getItem('token');
